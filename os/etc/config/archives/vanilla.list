@@ -1,1 +1,1 @@
-deb https://download.opensuse.org/repositories/home:/fabricators:/orchid/Debian_Unstable/ ./
+deb [signed-by=/etc/apt/keyrings/vanilla-keyring.gpg] https://download.opensuse.org/repositories/home:/fabricators:/orchid/Debian_Unstable/ ./
