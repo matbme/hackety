@@ -1,16 +1,15 @@
-FROM ubuntu:lunar
-LABEL maintainer="Brian Ketelsen"
+FROM debian:sid
+LABEL maintainer="Mateus Melchiades"
 
 ARG DEBIAN_FRONTEND=noninteractive
-COPY sources.list /etc/apt/sources.list
 # Install: dependencies, clean: apt cache, remove dir: cache, man, doc, change mod time of cache dir.
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
        software-properties-common \
-       rsyslog systemd systemd-cron sudo gpg grub-efi-amd64
-RUN apt-get -y install --no-install-recommends \
-  linux-image-generic \
-  systemd-sysv
+       rsyslog systemd systemd-cron sudo gpg \
+       linux-image-generic \
+       systemd-sysv \
+       grub-efi-amd64
 COPY os/etc/config/archives/vanilla.key /tmp/
 RUN cat /tmp/vanilla.key | gpg --dearmor -o /usr/share/keyrings/vanilla-keyring.gpg
 
@@ -19,6 +18,8 @@ RUN apt-get update \
     && apt-get install -y \
     vanilla-base-meta \
     vanilla-base-desktop \
+    vanilla-backgrounds \
+    ikaros \
     switcheroo-control \
     epiphany-browser \
     gnome-calculator \
