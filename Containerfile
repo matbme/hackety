@@ -11,7 +11,7 @@ RUN apt-get update && apt-get upgrade -y \
        systemd-sysv \
        grub-efi-amd64
 COPY os/etc/config/archives/vanilla.key /tmp/
-RUN cat /tmp/vanilla.key | gpg --dearmor -o /usr/share/keyrings/vanilla-keyring.gpg
+RUN cat /tmp/vanilla.key | gpg --dearmor -o /etc/apt/keyrings/vanilla-keyring.gpg
 
 COPY os/etc/config/archives/vanilla.list /etc/apt/sources.list.d/
 RUN apt-get update \
