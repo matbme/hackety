@@ -2,9 +2,9 @@ name: Build Image using Containerfile
 on:
   push:
     tags:
-      - '*'    
+      - '*'
 env:
-    IMAGE_NAME: vanilla-os 
+    IMAGE_NAME: vanilla-os
     IMAGE_TAGS: ${{ github.ref_name}} latest
     IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
     DOCKER_REGISTRY: docker.io/${{ github.repository_owner }}
@@ -46,18 +46,18 @@ jobs:
           --disable-content-trust
 
       # Push the image to docker
-    - name: Push To docker
-      uses: redhat-actions/push-to-registry@v2
-      id: pushdocker
-      with:
-        image: ${{ steps.build-action.outputs.image }}
-        tags: ${{ steps.build-action.outputs.tags }}
-        registry: ${{ env.DOCKER_REGISTRY }}
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        extra-args: |
-          --disable-content-trust
-    - name: Echo outputs
-      run: |
-        echo "${{ toJSON(steps.push.outputs) }}"
-        echo "${{ toJSON(steps.pushocker.outputs) }}"
+    # - name: Push To docker
+    #   uses: redhat-actions/push-to-registry@v2
+    #   id: pushdocker
+    #   with:
+    #     image: ${{ steps.build-action.outputs.image }}
+    #     tags: ${{ steps.build-action.outputs.tags }}
+    #     registry: ${{ env.DOCKER_REGISTRY }}
+    #     username: ${{ secrets.DOCKER_USER }}
+    #     password: ${{ secrets.DOCKER_PASSWORD }}
+    #     extra-args: |
+    #       --disable-content-trust
+    # - name: Echo outputs
+    #   run: |
+    #     echo "${{ toJSON(steps.push.outputs) }}"
+    #     echo "${{ toJSON(steps.pushocker.outputs) }}"
