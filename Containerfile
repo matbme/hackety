@@ -7,7 +7,7 @@ COPY sources.list /etc/apt/sources.list
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
        software-properties-common \
-       rsyslog systemd systemd-cron sudo gpg 
+       rsyslog systemd systemd-cron sudo gpg grub-efi-amd64
 RUN apt-get -y install --no-install-recommends \
   linux-image-generic \
   systemd-sysv
