@@ -14,7 +14,7 @@ RUN apt-get update && apt-get upgrade -y \
 
 # Setup non-free-firmware and contrib repositories
 RUN rm /etc/apt/sources.list.d/debian.sources
-RUN echo 'deb http://deb.debian.org/debian sid main contrib non-free-firmware' | tee /etc/apt/sources.list
+RUN echo 'deb http://deb.debian.org/debian sid main contrib non-free non-free-firmware' | tee /etc/apt/sources.list
 
 # Setup Vanilla repository
 COPY os/etc/config/archives/vanilla.key /tmp/
