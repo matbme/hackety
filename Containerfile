@@ -7,14 +7,13 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
        software-properties-common \
-       rsyslog systemd systemd-cron sudo gpg \
+       rsyslog systemd systemd-cron sudo gpg zstd rsync \
        linux-image-generic \
        systemd-sysv \
        grub-efi-amd64
 
 # Setup non-free-firmware and contrib repositories
-RUN rm /etc/apt/sources.list.d/debian.sources
-RUN echo 'deb http://deb.debian.org/debian sid main contrib non-free non-free-firmware' | tee /etc/apt/sources.list
+RUN sed -r -i 's/^(Components:).*/\1 main contrib non-free non-free-firmware/' /etc/apt/sources.list.d/debian.sources
 
 # Setup Vanilla repository
 COPY os/etc/config/archives/vanilla.key /tmp/
@@ -43,6 +42,10 @@ RUN apt-get update \
 
 
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
+
+# These symlinks break during the installation process, fix them here
+RUN ln -sf /usr/lib/os-release /etc/os-release
+RUN ln -sf /proc/self/mounts /etc/mtab
 
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 CMD ["/lib/systemd/systemd"]
