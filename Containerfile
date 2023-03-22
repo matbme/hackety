@@ -1,4 +1,4 @@
-FROM debian:sid
+FROM debian:unstable
 LABEL maintainer="Mateus Melchiades"
 
 ARG DEBIAN_FRONTEND=noninteractive
