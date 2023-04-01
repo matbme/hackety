@@ -12,10 +12,13 @@ RUN apt-get update && apt-get upgrade -y \
        systemd-sysv \
        grub-efi-amd64
 
-# Setup non-free-firmware and contrib repositories
-RUN sed -r -i 's/^(Components:).*/\1 main contrib non-free non-free-firmware/' /etc/apt/sources.list.d/debian.sources
+# Setup vanilla snapshot repository
+RUN rm -f /etc/apt/sources.list.d/debian.sources
+RUN echo 'deb [arch=amd64] http://repo.vanillaos.org/ sid main' > /etc/apt/sources.list.d/vanilla-base.list
+COPY os/etc/config/archives/vanilla-main.key /tmp/
+RUN cat /tmp/vanilla-main.key | gpg --dearmor -o /etc/apt/keyrings/vanilla-main-keyring.gpg
 
-# Setup Vanilla repository
+# Setup Vanilla OBS repository
 COPY os/etc/config/archives/vanilla.key /tmp/
 RUN cat /tmp/vanilla.key | gpg --dearmor -o /etc/apt/keyrings/vanilla-keyring.gpg
 COPY os/etc/config/archives/vanilla.list /etc/apt/sources.list.d/
