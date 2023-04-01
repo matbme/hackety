@@ -14,14 +14,16 @@ RUN apt-get update && apt-get upgrade -y \
 
 # Setup vanilla snapshot repository
 RUN rm -f /etc/apt/sources.list.d/debian.sources
-RUN echo 'deb [arch=amd64] http://repo.vanillaos.org/ sid main' > /etc/apt/sources.list.d/vanilla-base.list
 COPY os/etc/config/archives/vanilla-main.key /tmp/
 RUN cat /tmp/vanilla-main.key | gpg --dearmor -o /etc/apt/keyrings/vanilla-main-keyring.gpg
+COPY os/etc/config/archives/vanilla-main.list /etc/apt/sources.list.d/
 
 # Setup Vanilla OBS repository
 COPY os/etc/config/archives/vanilla.key /tmp/
 RUN cat /tmp/vanilla.key | gpg --dearmor -o /etc/apt/keyrings/vanilla-keyring.gpg
 COPY os/etc/config/archives/vanilla.list /etc/apt/sources.list.d/
+
+# Install system packages
 RUN apt-get update \
     && apt-get install -y \
     vanilla-base-meta \
