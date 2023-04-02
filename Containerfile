@@ -39,7 +39,7 @@ RUN apt-get update \
 
 # Remove Debian stuff
 RUN apt-get remove -y \
-    deskop-base
+    desktop-base
 
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
@@ -49,4 +49,3 @@ RUN ln -sf /proc/self/mounts /etc/mtab
 
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 CMD ["/lib/systemd/systemd"]
-
