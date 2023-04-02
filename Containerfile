@@ -31,20 +31,15 @@ RUN apt-get update \
     vanilla-backgrounds \
     switcheroo-control \
     epiphany-browser \
-    gnome-calculator \
-    gnome-music \
-    gnome-photos \
     gnome-software \
     gnome-disk-utility \
     gnome-sushi \
-    epiphany-browser \
-    evince \
     yelp \
-    file-roller \
-    eog \
-    orca \
-    totem
+    file-roller
 
+# Remove Debian stuff
+RUN apt-get remove -y \
+    deskop-base
 
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
